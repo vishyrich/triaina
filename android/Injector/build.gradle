@@ -1,10 +1,8 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 dependencies {
-    // the exclude for 'android-support-v4.jar' is for Eclipse IDE compatibility,
-    // so we can continue to keep the support library under /libs
-    compile fileTree(dir: 'libs', include: '*.jar', exclude: 'android-support-v4.jar')
-    compile 'com.android.support:support-v4:19.+'
+    compile fileTree(dir: 'libs', include: '*.jar')
+    compile 'com.android.support:support-v4:19.1.0'
 
     // manage javax.inject.jar via mavenCentral().
     // android-library plugin currently does not support declaration of maven repos.
