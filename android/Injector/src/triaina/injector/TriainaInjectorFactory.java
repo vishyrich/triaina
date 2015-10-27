@@ -1,17 +1,5 @@
 package triaina.injector;
 
-import java.util.ArrayList;
-import java.util.WeakHashMap;
-
-import triaina.commons.exception.CommonRuntimeException;
-import triaina.injector.internal.TriainaInjectorImpl;
-
-import roboguice.event.EventManager;
-import roboguice.inject.ContextScope;
-import roboguice.inject.ContextScopedRoboInjector;
-import roboguice.inject.ResourceListener;
-import roboguice.inject.ViewListener;
-
 import android.app.Application;
 import android.content.Context;
 
@@ -23,6 +11,17 @@ import com.google.inject.spi.DefaultElementVisitor;
 import com.google.inject.spi.Element;
 import com.google.inject.spi.Elements;
 import com.google.inject.spi.StaticInjectionRequest;
+
+import java.util.ArrayList;
+import java.util.WeakHashMap;
+
+import roboguice.event.EventManager;
+import roboguice.inject.ContextScope;
+import roboguice.inject.ContextScopedRoboInjector;
+import roboguice.inject.ResourceListener;
+import roboguice.inject.ViewListener;
+import triaina.commons.exception.CommonRuntimeException;
+import triaina.injector.internal.TriainaInjectorImpl;
 
 public class TriainaInjectorFactory {
 	public static final Stage DEFAULT_STAGE = Stage.PRODUCTION;
@@ -52,7 +51,7 @@ public class TriainaInjectorFactory {
 			element.acceptVisitor(new DefaultElementVisitor<Void>() {
 				@Override
 				public Void visit(StaticInjectionRequest element) {
-					getResourceListener(application).requestStaticInjection(element.getType());
+//					getResourceListener(application).requestStaticInjection(element.getType());
 					return null;
 				}
 			});
@@ -99,7 +98,7 @@ public class TriainaInjectorFactory {
 
     public static TriainaInjector getInjector(Context context) {
         final Application application = (Application)context.getApplicationContext();
-        return new TriainaInjectorImpl(new ContextScopedRoboInjector(context, getBaseApplicationInjector(application), getViewListener(application)));
+        return new TriainaInjectorImpl(new ContextScopedRoboInjector(context, getBaseApplicationInjector(application)));
     }
 
     public static <T> T injectMembers(Context context, T t) {
@@ -108,7 +107,7 @@ public class TriainaInjectorFactory {
     }
     
     public static DefaultTriainaModule newDefaultRoboModule(final Application application) {
-        return new DefaultTriainaModule(application, new ContextScope(), getViewListener(application), getResourceListener(application));
+        return new DefaultTriainaModule(application, new ContextScope(application), getViewListener(application), getResourceListener(application));
     }
 
     protected static ResourceListener getResourceListener(Application application ) {
@@ -141,7 +140,7 @@ public class TriainaInjectorFactory {
     public static void destroyInjector(Context context) {
         final TriainaInjector injector = getInjector(context);
         injector.getInstance(EventManager.class).destroy();
-        injector.getInstance(ContextScope.class).destroy(context);
+//        injector.getInstance(ContextScope.class).destroy(context);
         sInjectors.remove(context);
     }
 }

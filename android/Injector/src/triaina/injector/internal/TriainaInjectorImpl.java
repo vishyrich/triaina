@@ -1,13 +1,5 @@
 package triaina.injector.internal;
 
-import java.lang.annotation.Annotation;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import android.app.Activity;
-import android.support.v4.app.Fragment;
-
 import com.google.inject.Binding;
 import com.google.inject.Injector;
 import com.google.inject.Key;
@@ -18,8 +10,13 @@ import com.google.inject.Scope;
 import com.google.inject.TypeLiteral;
 import com.google.inject.spi.TypeConverterBinding;
 
-import triaina.injector.TriainaInjector;
+import java.lang.annotation.Annotation;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
 import roboguice.inject.ContextScopedRoboInjector;
+import triaina.injector.TriainaInjector;
 
 public class TriainaInjectorImpl implements TriainaInjector {
 	private ContextScopedRoboInjector mDelegate;
@@ -119,13 +116,18 @@ public class TriainaInjectorImpl implements TriainaInjector {
 		mDelegate.injectMembersWithoutViews(instance);
 	}
 
-	@Override
-	public void injectViewMembers(Activity activity) {
-		mDelegate.injectViewMembers(activity);
-	}
+//	@Override
+//	public void injectViewMembers(Activity activity) {
+//		mDelegate.injectViewMembers(activity);
+//	}
+//
+//	@Override
+//	public void injectViewMembers(Fragment fragment) {
+//		mDelegate.injectViewMembers(fragment);
+//	}
 
 	@Override
-	public void injectViewMembers(Fragment fragment) {
-		mDelegate.injectViewMembers(fragment);
+	public void injectViewMembers(Object instance) {
+		mDelegate.injectViewMembers(instance);
 	}
 }

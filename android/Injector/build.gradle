@@ -7,7 +7,7 @@ dependencies {
     // manage javax.inject.jar via mavenCentral().
     // android-library plugin currently does not support declaration of maven repos.
     // Repositories should be declared in root level build.gradle
-    compile 'javax.inject:javax.inject:1'
+    compile ('org.roboguice:roboguice:3.0.1')
 
     compile project(':triaina:android:Commons')
 }
